@@ -1,0 +1,32 @@
+{
+  "name": "adminweb/payer-pagseguro",
+  "version": "0.0.3",
+  "description": "A module payer for pagseguro gateway for laravel",
+  "license": "MIT",
+  "require": {
+    "adminweb/payer": "~0.0.15",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "AdminWeb\\PayerPagSeguro\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AdminWeb\\PayerPagSeguro\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "IgorDePaula",
+      "email": "principe.borodin@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "vlucas/phpdotenv": "^2.4",
+    "phpunit/phpunit": "^7.2",
+    "nesbot/carbon": "1.25",
+    "orchestra/testbench": "^3.6"
+  }
+}
