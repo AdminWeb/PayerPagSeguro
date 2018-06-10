@@ -19,7 +19,18 @@ class ProductionTest extends TestCase
      */
     public function testGetUri()
     {
-        $prod = new Production();
+        $prod = new Production(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'));
         $this->assertEquals('https://ws.pagseguro.uol.com.br/', $prod->getUri());
+    }
+
+    /**
+     * @test
+     * @covers \AdminWeb\PayerPagSeguro\Env\Production
+     */
+    public function GetCredentials()
+    {
+        $prod = new Production(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'));
+        $this->assertEquals(env('PAGSEGURO_EMAIL'), $prod->getCredential());
+        $this->assertEquals( env('PAGSEGURO_TOKEN'), $prod->getToken());
     }
 }

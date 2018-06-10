@@ -15,49 +15,10 @@ use GuzzleHttp\Client;
 
 class Redirect
 {
-    private $email, $token, $items = [], $env, $reference, $code;
+    private $items = [], $env, $reference, $code;
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function __construct(EnvInterface $env)
     {
-        return $this->email;
-    }
-
-    /**
-     * @param mixed $email
-     * @return Redirect
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param mixed $token
-     * @return Redirect
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-        return $this;
-    }
-
-
-    public function __construct($email, $token, EnvInterface $env)
-    {
-        $this->setEmail($email);
-        $this->setToken($token);
         $this->setEnv($env);
     }
 
@@ -80,8 +41,8 @@ class Redirect
     protected function loadData()
     {
         $data = [
-            'email' => $this->getEmail(),
-            'token' => $this->getToken(),
+            'email' => $this->getEnv()->getCredential(),
+            'token' => $this->getEnv()->getToken(),
             'currency' => 'BRL'
         ];
         $items = $this->getItems()->getItem();

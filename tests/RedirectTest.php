@@ -26,7 +26,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
+        $redirect = new Redirect(new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
@@ -50,7 +50,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
+        $redirect = new Redirect(new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
         $ref->setAccessible(true);
@@ -72,7 +72,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
+        $redirect = new Redirect( new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
 
@@ -80,10 +80,10 @@ class RedirectTest extends TestCase
         $ref->setAccessible(true);
         $code = $ref->invoke($redirect);
         $code = $code->code;
-        $link =  $redirect->getLink();
-        list($url, $newcode) = explode('=',$link);
+        $link = $redirect->getLink();
+        list($url, $newcode) = explode('=', $link);
         $data = [$url, $code];
-        $newlink = implode('=',$data);
+        $newlink = implode('=', $data);
 
         $this->assertEquals(
             str_replace('{{codigo-checkout}}', $code, 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code={{codigo-checkout}}'),
