@@ -88,7 +88,7 @@ class Redirect
         $itemsCount = $this->getItems()->count();
 
         for ($i = 1; $i <= $itemsCount; $i++) {
-            $data["itemId{$i}"] = $items->offsetGet($i - 1)->getId();
+            $data["itemId{$i}"] = $items->offsetGet($i - 1)->getidItem();
             $data["itemDescription{$i}"] = $items->offsetGet($i - 1)->getName();
             $data["itemAmount{$i}"] = $items->offsetGet($i - 1)->getAmount();
             $data["itemQuantity{$i}"] = $items->offsetGet($i - 1)->getQuantity();

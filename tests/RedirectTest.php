@@ -24,7 +24,7 @@ class RedirectTest extends TestCase
     public function RedirectTemplate()
     {
         $item = new Item('Tv', '1', 599);
-        $item->setId(3);
+        $item->setidItem(3);
         $itemlist = new ItemList([$item]);
         $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
         $redirect->setReference(123);
@@ -48,7 +48,7 @@ class RedirectTest extends TestCase
     public function RedirectREferenceException()
     {
         $item = new Item('Tv', '1', 599);
-        $item->setId(3);
+        $item->setidItem(3);
         $itemlist = new ItemList([$item]);
         $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
         $redirect->setItems($itemlist);
@@ -70,7 +70,7 @@ class RedirectTest extends TestCase
     public function RedirectGetLink()
     {
         $item = new Item('Tv', '1', 599);
-        $item->setId(3);
+        $item->setidItem(3);
         $itemlist = new ItemList([$item]);
         $redirect = new Redirect(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'), new SandoBox());
         $redirect->setReference(123);
