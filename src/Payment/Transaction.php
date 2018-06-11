@@ -12,7 +12,7 @@ namespace AdminWeb\PayerPagSeguro\Payment;
 use AdminWeb\Payer\EnvInterface;
 use GuzzleHttp\Client;
 
-class Notification
+class Transaction
 {
     private $env;
 
@@ -25,7 +25,7 @@ class Notification
         $this->env = $env;
     }
 
-    public function getNotification($transactionCode)
+    public function getTransaction($transactionCode)
     {
         $client =  new Client([
             'base_uri' => $this->env->getUri()
@@ -37,6 +37,8 @@ class Notification
         ]]);
         return $response->getBody()->getContents();
     }
+
+
 
 
 }
