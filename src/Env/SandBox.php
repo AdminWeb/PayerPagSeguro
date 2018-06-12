@@ -11,7 +11,7 @@ namespace AdminWeb\PayerPagSeguro\Env;
 
 use AdminWeb\Payer\EnvInterface;
 
-class SandoBox implements EnvInterface
+class SandBox implements EnvInterface
 {
     const Env = self::SandBox;
     private $credential, $token;

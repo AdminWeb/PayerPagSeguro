@@ -10,8 +10,9 @@ namespace AdminWeb\PayerPagSeguro\Tests;
 
 
 use AdminWeb\Payer\PayerServiceProvider;
-use AdminWeb\PayerPagSeguro\Http\WebHookController;
 use AdminWeb\PayerPagSeguro\PayerPagSeguroServiceProvider;
+use AdminWeb\PayerPagSeguro\States\PaidState;
+use AdminWeb\PayerPagSeguro\Tests\Fixtures\WebHookControllerStub;
 use Illuminate\Http\Request;
 use Orchestra\Testbench\TestCase;
 
@@ -51,8 +52,17 @@ class WebHookTest extends TestCase
             'notificationType' => 'transaction'
         ];
         $request = Request::create(route('payer_webhook'), 'POST', $data, [], [], [], []);
-        $controller = new WebHookController();
+        $controller = new WebHookControllerStub();
         $response = $controller->handle($request);
         $this->assertEquals($data['notificationCode'], $response['notificationCode']);
+    }
+
+    /**
+     * @test
+     *
+     */
+    public function SendPostDataStub()
+    {
+        $this->assertEquals(new PaidState(), makeState(new PaidState()));
     }
 }

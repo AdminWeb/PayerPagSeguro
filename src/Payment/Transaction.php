@@ -14,6 +14,9 @@ use GuzzleHttp\Client;
 
 class Transaction
 {
+    /**
+     * @var EnvInterface
+     */
     private $env;
 
     /**
@@ -22,21 +25,42 @@ class Transaction
      */
     public function __construct(EnvInterface $env)
     {
-        $this->env = $env;
+        $this->setEnv($env);
     }
 
     public function getTransaction($transactionCode)
     {
         $client =  new Client([
-            'base_uri' => $this->env->getUri()
+            'base_uri' => $this->env->getUri(),
+            //'http_errors' => false
         ]);
 
-        $response = $client->get("/v3/transactions/notifications/{$transactionCode}", ['query' => [
+        $response = $client->get("/v3/transactions/{$transactionCode}", ['query' => [
             'email'=>$this->env->getCredential(),
             'token'=>$this->env->getToken()
         ]]);
-        return $response->getBody()->getContents();
+        return simplexml_load_string($response->getBody()->getContents());
     }
+
+    /**
+     * @return EnvInterface
+     */
+    public function getEnv()
+    {
+        return $this->env;
+    }
+
+    /**
+     * @param EnvInterface $env
+     * @return Transaction
+     */
+    public function setEnv(EnvInterface $env)
+    {
+        $this->env = $env;
+        return $this;
+    }
+
+
 
 
 

@@ -11,8 +11,6 @@ namespace AdminWeb\PayerPagSeguro\States;
 use AdminWeb\Payer\States\AbstractState as BaseState;
 use AdminWeb\Payer\States\StateException;
 
-//https://devs.pagseguro.uol.com.br/docs/checkout-web-notificacoes#section--a-name-status-da-transacao-a-status-da-transa-o
-
 abstract class AbstractState extends BaseState
 {
     const WAITING_PAYMENT = 'WAITING_PAYMENT';

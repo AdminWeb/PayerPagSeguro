@@ -1,16 +1,20 @@
 {
   "name": "adminweb/payer-pagseguro",
-  "version": "0.0.10",
+  "version": "0.0.15",
   "description": "A module payer for pagseguro gateway for laravel",
   "license": "MIT",
   "require": {
-    "adminweb/payer": "~0.0.17",
+    "php":"7.1",
+    "adminweb/payer": "~0.0.21",
     "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "psr-4": {
       "AdminWeb\\PayerPagSeguro\\": "src/"
-    }
+    },
+    "files": [
+      "src/helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

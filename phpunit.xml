@@ -30,7 +30,9 @@
     </logging>
     <php>
         <env name="DRIVER" value="PAGSEGURO"/>
-        <env name="PAGSEGURO_EMAIL" value="suporte@lojamodelo.com.br"/>
-        <env name="PAGSEGURO_TOKEN" value="57BE455F4EC148E5A54D9BB91C5AC12C"/>
+        <env name="PAGSEGURO_EMAIL" value=""/>
+        <env name="PAGSEGURO_TOKEN" value=""/>
+        <env name="PAGSEGURO_EMAIL_SANDBOX" value="suporte@lojamodelo.com.br"/>
+        <env name="PAGSEGURO_TOKEN_SANDBOX" value="57BE455F4EC148E5A54D9BB91C5AC12C"/>
     </php>
 </phpunit>

@@ -10,7 +10,7 @@ namespace AdminWeb\PayerPagSeguro\Tests;
 
 use AdminWeb\Payer\Itemable\Item;
 use AdminWeb\Payer\Itemable\ItemList;
-use AdminWeb\PayerPagSeguro\Env\SandoBox;
+use AdminWeb\PayerPagSeguro\Env\SandBox;
 use AdminWeb\PayerPagSeguro\Payment\Redirect;
 use PHPUnit\Framework\TestCase;
 
@@ -26,7 +26,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
@@ -50,7 +50,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
         $ref->setAccessible(true);
@@ -72,7 +72,7 @@ class RedirectTest extends TestCase
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect( new SandoBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL_SANDBOX'), env('PAGSEGURO_TOKEN_SANDBOX')));
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
 
