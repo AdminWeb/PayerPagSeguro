@@ -12,6 +12,7 @@ namespace AdminWeb\PayerPagSeguro;
 use AdminWeb\Payer\EnvInterface;
 use AdminWeb\PayerPagSeguro\Env\Production;
 use AdminWeb\PayerPagSeguro\Env\SandBox;
+use AdminWeb\PayerPagSeguro\States\WaitingPayment;
 use Illuminate\Support\ServiceProvider;
 
 class PayerPagSeguroServiceProvider extends ServiceProvider
@@ -33,11 +34,15 @@ class PayerPagSeguroServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(EnvInterface::class, function(){
-            $env = env('APP_ENV');
+            $env = $this->app['config']['app']['env'];
             if($env == strtolower('production')){
                 return new Production(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'));
             }
             return new SandBox(env('PAGSEGURO_EMAIL_SANDBOX'), env('PAGSEGURO_TOKEN_SANBOX'));
+        });
+
+        $this->app->bind('InitialState',function(){
+            return new WaitingPayment();
         });
     }
 }

@@ -14,6 +14,8 @@ class AvailableState extends AbstractState
 
     const STATE = self::AVAILABLE;
 
+    const CODE = 4;
+
     public function contest()
     {
         return new ContestState();

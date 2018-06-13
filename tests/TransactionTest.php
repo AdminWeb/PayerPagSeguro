@@ -8,32 +8,72 @@
 
 namespace AdminWeb\PayerPagSeguro\Tests;
 
-use AdminWeb\PayerPagSeguro\Env\SandBox;
+use AdminWeb\Payer\EnvInterface;
+use AdminWeb\Payer\PayerServiceProvider;
+use AdminWeb\PayerPagSeguro\PayerPagSeguroServiceProvider;
 use AdminWeb\PayerPagSeguro\Payment\Transaction;
 use AdminWeb\PayerPagSeguro\Tests\Fixtures\TransactionStub;
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testbench\TestCase;
 
+/**
+ * Class TransactionTest
+ * @package AdminWeb\PayerPagSeguro\Tests
+ * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction
+ */
 class TransactionTest extends TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
 
+        $this->loadLaravelMigrations(['--database' => 'testing']);
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->artisan('migrate', ['--database' => 'testing']);
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+        $app['config']->set('database.default', 'testing');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            PayerServiceProvider::class,
+            PayerPagSeguroServiceProvider::class,
+        ];
+    }
     /**
      * @test
-     * @expectedException \GuzzleHttp\Exception\ClientException
-     * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction
+     * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction::getTransaction()
      */
     public function GetTransaction()
     {
-        $t = new Transaction(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $env = app()->make(EnvInterface::class);
+        $t = new Transaction($env);
         $response = $t->getTransaction('766B9C-AD4B044B04DA-77742F5FA653-E1AB24');
     }
 
     /**
      * @test
-     * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction
+     *
+     */
+    public function GetEnv()
+    {
+        $env = app()->make(EnvInterface::class);
+        $t = new Transaction($env);
+        $this->assertInstanceOf(EnvInterface::class, $t->getEnv());
+    }
+
+    /**
+     * @test
+     * @cover \AdminWeb\PayerPagSeguro\Payment\Transaction::getTransaction
      */
     public function GetTransactionIsXML()
     {
-        $t = new TransactionStub(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $env = app()->make(EnvInterface::class);
+        $t = new TransactionStub($env);
         $response = $t->getTransaction('766B9C-AD4B044B04DA-77742F5FA653-E1AB24');
         $expected = new \DOMDocument('foo');
         $actual = new \DOMDocument('foo');
@@ -41,63 +81,62 @@ class TransactionTest extends TestCase
 
         $expected->loadXML('
         <transaction>
-        <date></date>
-        <code></code>
-        <reference></reference>
-        <type></type>
-        <status></status>
-        <paymentMethod>
-        <type></type>
-        <code></code>
-</paymentMethod>
-        <grossAmount></grossAmount>
-        <discountAmount></discountAmount>
-        <creditorFees>
-        <intermediationRateAmount></intermediationRateAmount>
-        <intermediationFeeAmount></intermediationFeeAmount>
-</creditorFees>
-        <netAmount></netAmount>
-        <extraAmount></extraAmount>
-        <installmentCount></installmentCount>
-        <itemCount></itemCount>
-        <items>
-        <item>
-        <id></id>
-        <description></description>
-        <quantity></quantity>
-        <amount></amount>
-</item>
-        <item>
-         <id></id>
-        <description></description>
-        <quantity></quantity>
-        <amount></amount>
-</item>
-</items>
-        <sender>
-        <name></name>
-        <email></email>
-        <phone>
-        <areaCode></areaCode>
-        <number></number>
-</phone>
-</sender>
-        <shipping>
-         <address>  
-            <street></street>  
-            <number></number>  
-            <complement></complement>  
-            <district></district>  
-            <postalCode></postalCode>  
-            <city></city>  
-            <state></state>  
-            <country></country>  
-        </address>  
-        <type></type>  
-        <cost></cost>  
-</shipping>
-        </transaction>
-        ');
+            <date></date>
+            <code></code>
+            <reference></reference>
+            <type></type>
+            <status></status>
+            <paymentMethod>
+                <type></type>
+                <code></code>
+            </paymentMethod>
+            <grossAmount></grossAmount>
+            <discountAmount></discountAmount>
+            <creditorFees>
+                <intermediationRateAmount></intermediationRateAmount>
+                <intermediationFeeAmount></intermediationFeeAmount>
+            </creditorFees>
+            <netAmount></netAmount>
+            <extraAmount></extraAmount>
+            <installmentCount></installmentCount>
+            <itemCount></itemCount>
+            <items>
+                <item>
+                    <id></id>
+                    <description></description>
+                    <quantity></quantity>
+                    <amount></amount>
+                </item>
+                <item>
+                    <id></id>
+                    <description></description>
+                    <quantity></quantity>
+                    <amount></amount>
+                </item>
+            </items>
+            <sender>
+                <name></name>
+                <email></email>
+                <phone>
+                    <areaCode></areaCode>
+                    <number></number>
+                </phone>
+            </sender>
+            <shipping>
+                <address>  
+                    <street></street>  
+                    <number></number>  
+                    <complement></complement>  
+                    <district></district>  
+                    <postalCode></postalCode>  
+                    <city></city>  
+                    <state></state>  
+                    <country></country>  
+                </address>  
+                <type></type>  
+                <cost></cost>  
+            </shipping>
+        </transaction>');
         $this->assertEqualXMLStructure($expected->firstChild, $actual->firstChild);
     }
 }

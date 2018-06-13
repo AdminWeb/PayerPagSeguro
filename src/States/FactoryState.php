@@ -10,37 +10,35 @@ namespace AdminWeb\PayerPagSeguro\States;
 use AdminWeb\PayerPagSeguro\States\{
     AvailableState, CancelledState, ContestState, DebitedState, InAnalysis, PaidState, ReturnedState, WaitingPayment
 };
-use AdminWeb\PayerPagSeguro\States\AbstractState;
-
 class FactoryState
 {
     static public function get($state)
     {
         $factoredState = null;
         switch ($state) {
-            case AbstractState::AVAILABLE == $state :
-                $factoredState = new AvailableState();
+            case 1:
+                $factoredState = new WaitingPayment();
                 break;
-            case AbstractState::PAID == $state:
-                $factoredState = new PaidState();
-                break;
-            case AbstractState::CANCELLED == $state:
-                $factoredState = new CancelledState();
-                break;
-            case AbstractState::CONTEST == $state:
-                $factoredState = new ContestState();
-                break;
-            case AbstractState::DEBITED == $state:
-                $factoredState = new DebitedState();
-                break;
-            case AbstractState::IN_ANALYSIS == $state:
+            case 2:
                 $factoredState = new InAnalysis();
                 break;
-            case AbstractState::RETURNED == $state:
+            case 3:
+                $factoredState = new PaidState();
+                break;
+            case 4:
+                $factoredState = new AvailableState();
+                break;
+            case 5:
+                $factoredState = new ContestState();
+                break;
+            case 6:
                 $factoredState = new ReturnedState();
                 break;
-            case AbstractState::WAITING_PAYMENT == $state:
-                $factoredState = new WaitingPayment();
+            case 7:
+                $factoredState = new CancelledState();
+                break;
+            case 8:
+                $factoredState = new DebitedState();
                 break;
         }
         return $factoredState;

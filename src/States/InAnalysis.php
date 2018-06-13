@@ -16,6 +16,8 @@ class InAnalysis extends AbstractState
 {
     const STATE = self::IN_ANALYSIS;
 
+    const CODE = 2;
+
     public function __toString()
     {
         return self::STATE;

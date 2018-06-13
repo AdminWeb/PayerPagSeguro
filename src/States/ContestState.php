@@ -13,6 +13,8 @@ class ContestState extends AbstractState
 {
     const STATE = self::CONTEST;
 
+    const CODE = 5;
+
     public function __toString()
     {
        return self::STATE;

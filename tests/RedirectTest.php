@@ -8,25 +8,51 @@
 
 namespace AdminWeb\PayerPagSeguro\Tests;
 
+use AdminWeb\Payer\EnvInterface;
 use AdminWeb\Payer\Itemable\Item;
 use AdminWeb\Payer\Itemable\ItemList;
-use AdminWeb\PayerPagSeguro\Env\SandBox;
+use AdminWeb\Payer\PayerServiceProvider;
+use AdminWeb\PayerPagSeguro\PayerPagSeguroServiceProvider;
 use AdminWeb\PayerPagSeguro\Payment\Redirect;
-use PHPUnit\Framework\TestCase;
+use Orchestra\Testbench\TestCase;
 
 
 class RedirectTest extends TestCase
 {
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations(['--database' => 'testing']);
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->artisan('migrate', ['--database' => 'testing']);
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+        $app['config']->set('database.default', 'testing');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            PayerServiceProvider::class,
+            PayerPagSeguroServiceProvider::class,
+        ];
+    }
     /**
      * @test
      * @covers \AdminWeb\PayerPagSeguro\Payment\Redirect
      */
     public function RedirectTemplate()
     {
+        $env = app()->make(EnvInterface::class);
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $redirect = new Redirect($env);
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
@@ -47,10 +73,11 @@ class RedirectTest extends TestCase
      */
     public function RedirectREferenceException()
     {
+        $env = app()->make(EnvInterface::class);
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN')));
+        $redirect = new Redirect($env);
         $redirect->setItems($itemlist);
         $ref = new \ReflectionMethod($redirect, 'loadData');
         $ref->setAccessible(true);
@@ -65,14 +92,16 @@ class RedirectTest extends TestCase
 
     /**
      * @test
-     * @covers \AdminWeb\PayerPagSeguro\Payment\Redirect
+     * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getCode
+     * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getLink
      */
     public function RedirectGetLink()
     {
+        $env = app()->make(EnvInterface::class);
         $item = new Item('Tv', '1', 599);
         $item->setidItem(3);
         $itemlist = new ItemList([$item]);
-        $redirect = new Redirect(new SandBox(env('PAGSEGURO_EMAIL_SANDBOX'), env('PAGSEGURO_TOKEN_SANDBOX')));
+        $redirect = new Redirect($env);
         $redirect->setReference(123);
         $redirect->setItems($itemlist);
 

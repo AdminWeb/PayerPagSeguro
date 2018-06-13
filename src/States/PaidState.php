@@ -14,6 +14,8 @@ class PaidState extends AbstractState
 
     const STATE = self::PAID;
 
+    const CODE = 3;
+
     public function contest()
     {
         return new ContestState();

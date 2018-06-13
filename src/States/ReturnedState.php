@@ -14,6 +14,8 @@ class ReturnedState extends AbstractState
 
     const STATE = self::RETURNED;
 
+    const CODE = 6;
+
     public function __toString()
     {
        return self::STATE;

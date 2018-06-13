@@ -33,7 +33,7 @@ class Redirect
     {
         $c = new Client([
             'base_uri' => $this->getEnv()->getUri()
-        ]);;
+        ]);
         $response = $c->post('/v2/checkout', ['form_params' => $this->loadData()]);
         return simplexml_load_string($response->getBody()->getContents());
     }

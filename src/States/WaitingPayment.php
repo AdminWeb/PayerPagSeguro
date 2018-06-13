@@ -17,6 +17,8 @@ class WaitingPayment extends AbstractState
 
     const STATE = self::WAITING_PAYMENT;
 
+    const CODE = 1;
+
     public function __toString()
     {
         return self::STATE;

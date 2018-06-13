@@ -14,6 +14,8 @@ class DebitedState extends AbstractState
 
     const STATE = self::DEBITED;
 
+    const CODE = 8;
+
     public function __toString()
     {
         return self::STATE;
