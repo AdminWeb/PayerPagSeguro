@@ -23,7 +23,8 @@ class WebHookController extends Controller
         $t = new Transaction($env);
         $response = $t->getTransaction($request->notificationCode);
         $sub = Subscription::where('reference_id', $response->reference)->get()->first();
-        $sub->status = makeState($response->status);
+        $status = (int) $response->status;
+        $sub->status = makeState($status);
         $sub->save();
     }
 }
