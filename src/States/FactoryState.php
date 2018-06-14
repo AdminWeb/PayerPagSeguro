@@ -7,19 +7,26 @@
  */
 
 namespace AdminWeb\PayerPagSeguro\States;
+
+use AdminWeb\Payer\States\StateException;
+
 class FactoryState
 {
     static public function get($state)
     {
-        $factoredState = null;
-        if ($state == WaitingPayment::CODE) $factoredState = new WaitingPayment();
-        if ($state == InAnalysis::CODE) $factoredState = new InAnalysis();
-        if ($state == PaidState::CODE) $factoredState = new PaidState();
-        if ($state == AvailableState::CODE) $factoredState = new AvailableState();
-        if ($state == ContestState::CODE) $factoredState = new ContestState();
-        if ($state == ReturnedState::CODE) $factoredState = new ReturnedState();
-        if ($state == CancelledState::CODE) $factoredState = new CancelledState();
-        if ($state == DebitedState::CODE) $factoredState = new DebitedState();
-        return $factoredState;
+        $states = [
+            WaitingPayment::CODE => new WaitingPayment(),
+            InAnalysis::CODE => new InAnalysis(),
+            PaidState::CODE => new PaidState(),
+            AvailableState::CODE => new AvailableState(),
+            ContestState::CODE => new ContestState(),
+            ReturnedState::CODE => new ReturnedState(),
+            CancelledState::CODE => new CancelledState(),
+            DebitedState::CODE => new DebitedState()
+        ];
+        if (!array_key_exists($state, $states)) {
+            throw new StateException('Unknow State');
+        }
+        return $states[$state];
     }
 }

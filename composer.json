@@ -1,6 +1,6 @@
 {
   "name": "adminweb/payer-pagseguro",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "A module payer for pagseguro gateway for laravel",
   "license": "MIT",
   "require": {

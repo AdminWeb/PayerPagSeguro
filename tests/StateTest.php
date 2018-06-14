@@ -22,4 +22,13 @@ class StateTest extends TestCase
     {
         $this->assertEquals(new PaidState(), makeState(3));
     }
+
+    /**
+     * @test
+     * @expectedException \AdminWeb\Payer\States\StateException
+     */
+    public function MakeException()
+    {
+        makeState(9);
+    }
 }
