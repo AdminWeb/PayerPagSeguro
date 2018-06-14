@@ -22,11 +22,19 @@ class Redirect
         $this->setEnv($env);
     }
 
+    /**
+     * @param mixed $env
+     * @return Redirect
+     */
+    public function setEnv(EnvInterface $env)
+    {
+        $this->env = $env;
+        return $this;
+    }
+
     public function getLink()
     {
-        $code = $this->getCode()->code;
-        $link = str_replace('{{codigo-checkout}}', $code, 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code={{codigo-checkout}}');
-        return $link;
+        return str_replace('{{codigo-checkout}}', $this->getCode()->code, 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code={{codigo-checkout}}');
     }
 
     protected function getCode()
@@ -34,8 +42,15 @@ class Redirect
         $c = new Client([
             'base_uri' => $this->getEnv()->getUri()
         ]);
-        $response = $c->post('/v2/checkout', ['form_params' => $this->loadData()]);
-        return simplexml_load_string($response->getBody()->getContents());
+        return simplexml_load_string($c->post('/v2/checkout', ['form_params' => $this->loadData()])->getBody()->getContents());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnv()
+    {
+        return $this->env;
     }
 
     protected function loadData()
@@ -72,24 +87,6 @@ class Redirect
     public function setItems(ItemList $items)
     {
         $this->items = $items;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnv()
-    {
-        return $this->env;
-    }
-
-    /**
-     * @param mixed $env
-     * @return Redirect
-     */
-    public function setEnv(EnvInterface $env)
-    {
-        $this->env = $env;
-        return $this;
     }
 
     /**

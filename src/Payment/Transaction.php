@@ -35,11 +35,10 @@ class Transaction
             //'http_errors' => false
         ]);
 
-        $response = $client->get("/v3/transactions/{$transactionCode}", ['query' => [
+        return simplexml_load_string($client->get("/v3/transactions/{$transactionCode}", ['query' => [
             'email'=>$this->env->getCredential(),
             'token'=>$this->env->getToken()
-        ]]);
-        return simplexml_load_string($response->getBody()->getContents());
+        ]])->getBody()->getContents());
     }
 
     /**

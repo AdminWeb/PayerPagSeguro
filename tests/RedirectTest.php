@@ -92,11 +92,10 @@ class RedirectTest extends TestCase
 
     /**
      * @test
-     * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getCode
-     * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getLink
+     * @covers \AdminWeb\PayerPagSeguro\Payment\Redirect
      * @expectedException \GuzzleHttp\Exception\ClientException
      */
-    public function RedirectGetLink()
+    public function RedirectGetLinkWithGetCode()
     {
         $env = app()->make(EnvInterface::class);
         $item = new Item('Tv', '1', 599);
@@ -119,5 +118,22 @@ class RedirectTest extends TestCase
             str_replace('{{codigo-checkout}}', $code, 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code={{codigo-checkout}}'),
             $newlink
         );
+    }/**
+     * @test
+     * @covers \AdminWeb\PayerPagSeguro\Payment\Redirect
+     * @expectedException \GuzzleHttp\Exception\ClientException
+     */
+    public function RedirectGetLink()
+    {
+        $env = app()->make(EnvInterface::class);
+        $item = new Item('Tv', '1', 599);
+        $item->setidItem(3);
+        $itemlist = new ItemList([$item]);
+        $redirect = new Redirect($env);
+        $redirect->setReference(123);
+        $redirect->setItems($itemlist);
+        $link = $redirect->getLink();
+
+        $this->assertTrue($link);
     }
 }
