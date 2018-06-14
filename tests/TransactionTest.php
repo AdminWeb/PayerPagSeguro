@@ -24,7 +24,8 @@ class TransactionTest extends TestCase
 {
     /**
      * @test
-     * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction::getTransaction()
+     * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction::getTransaction
+     * @expectedException \GuzzleHttp\Exception\ClientException
      */
     public function GetTransaction()
     {

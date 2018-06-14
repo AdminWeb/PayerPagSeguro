@@ -94,6 +94,7 @@ class RedirectTest extends TestCase
      * @test
      * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getCode
      * @cover \AdminWeb\PayerPagSeguro\Payment\Redirect::getLink
+     * @expectedException \GuzzleHttp\Exception\ClientException
      */
     public function RedirectGetLink()
     {
