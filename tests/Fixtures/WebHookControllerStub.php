@@ -27,7 +27,8 @@ class WebHookControllerStub extends WebHookController
         $t = new TransactionStub($env);
         $response = $t->getTransaction($request->notificationCode, true);
         $sub = Subscription::where('reference_id', $response->reference)->get()->first();
-        $sub->status = makeState($response->status);
+        $status = (int) $response->status;
+        $sub->status = makeState($status);
         $sub->save();
     }
 }
