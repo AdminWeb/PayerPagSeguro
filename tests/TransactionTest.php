@@ -22,28 +22,6 @@ use Orchestra\Testbench\TestCase;
  */
 class TransactionTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->loadLaravelMigrations(['--database' => 'testing']);
-        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
-        $this->artisan('migrate', ['--database' => 'testing']);
-    }
-
-    protected function getEnvironmentSetUp($app)
-    {
-        parent::getEnvironmentSetUp($app);
-        $app['config']->set('database.default', 'testing');
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            PayerServiceProvider::class,
-            PayerPagSeguroServiceProvider::class,
-        ];
-    }
     /**
      * @test
      * @covers \AdminWeb\PayerPagSeguro\Payment\Transaction::getTransaction()
@@ -138,5 +116,28 @@ class TransactionTest extends TestCase
             </shipping>
         </transaction>');
         $this->assertEqualXMLStructure($expected->firstChild, $actual->firstChild);
+    }
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->loadLaravelMigrations(['--database' => 'testing']);
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->artisan('migrate', ['--database' => 'testing']);
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        parent::getEnvironmentSetUp($app);
+        $app['config']->set('database.default', 'testing');
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            PayerServiceProvider::class,
+            PayerPagSeguroServiceProvider::class,
+        ];
     }
 }
