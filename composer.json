@@ -1,6 +1,6 @@
 {
   "name": "adminweb/payer-pagseguro",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "A module payer for pagseguro gateway for laravel",
   "license": "MIT",
   "require": {
@@ -35,7 +35,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "AdminWeb\\Payer\\PayerPagSeguroServiceProvider"
+        "AdminWeb\\PayerPagSeguro\\PayerPagSeguroServiceProvider"
       ]
     }
   }
