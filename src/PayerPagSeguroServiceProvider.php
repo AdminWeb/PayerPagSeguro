@@ -10,6 +10,8 @@ namespace AdminWeb\PayerPagSeguro;
 
 
 use AdminWeb\Payer\EnvInterface;
+use AdminWeb\Payer\SubscriptionBuilderInterface;
+use AdminWeb\Payer\SubscriptionInterface;
 use AdminWeb\PayerPagSeguro\Env\Production;
 use AdminWeb\PayerPagSeguro\Env\SandBox;
 use AdminWeb\PayerPagSeguro\States\WaitingPayment;
@@ -43,6 +45,10 @@ class PayerPagSeguroServiceProvider extends ServiceProvider
 
         $this->app->bind('InitialState',function(){
             return new WaitingPayment();
+        });
+
+        $this->app->bind(SubscriptionInterface::class,function(){
+            return new Subscription();
         });
     }
 }
