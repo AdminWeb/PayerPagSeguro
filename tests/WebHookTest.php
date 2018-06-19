@@ -53,7 +53,7 @@ class WebHookTest extends TestCase
             'password' => '123'
         ]);
         $item = new Item('Tv', 1, 599);
-        $user->createSubscription('teste', $item)->setReference('REF1234')->start();
+        $sub = $user->createSubscription('teste', $item)->start('REF1234');
         $request = Request::create(route('payer_webhook'), 'POST', $data, [], [], [], []);
         $controller = new WebHookControllerStub();
         $controller->handleXml($request);

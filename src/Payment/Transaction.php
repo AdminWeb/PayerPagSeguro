@@ -28,17 +28,20 @@ class Transaction
         $this->setEnv($env);
     }
 
-    public function getTransaction($transactionCode)
+    public function getTransaction($transactionCode, $isSimple = false)
     {
-        $client =  new Client([
+        $client = new Client([
             'base_uri' => $this->env->getUri(),
             //'http_errors' => false
         ]);
 
-        return simplexml_load_string($client->get("/v3/transactions/{$transactionCode}", ['query' => [
-            'email'=>$this->env->getCredential(),
-            'token'=>$this->env->getToken()
-        ]])->getBody()->getContents());
+        $xml = $client->get("/v3/transactions/{$transactionCode}", ['query' => [
+            'email' => $this->env->getCredential(),
+            'token' => $this->env->getToken()
+        ]])->getBody()->getContents();
+        $doc = new \DOMDocument();
+        $doc->loadXML($xml);
+        return !$isSimple ? $doc : $xml;
     }
 
     /**
@@ -58,10 +61,6 @@ class Transaction
         $this->env = $env;
         return $this;
     }
-
-
-
-
 
 
 }

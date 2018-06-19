@@ -73,6 +73,10 @@ class TransactionStub extends Transaction
                         <cost>21.50</cost>  
                     </shipping>
                 </transaction>';
-        return $isSimple ? simplexml_load_string($xml) : $xml;
+
+        $doc = new \DOMDocument();
+        $doc->loadXML($xml);
+
+        return !$isSimple ? $doc : $xml;
     }
 }

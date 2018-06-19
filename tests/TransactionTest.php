@@ -53,7 +53,7 @@ class TransactionTest extends TestCase
     {
         $env = app()->make(EnvInterface::class);
         $t = new TransactionStub($env);
-        $response = $t->getTransaction('766B9C-AD4B044B04DA-77742F5FA653-E1AB24');
+        $response = $t->getTransaction('766B9C-AD4B044B04DA-77742F5FA653-E1AB24', true);
         $expected = new \DOMDocument('foo');
         $actual = new \DOMDocument('foo');
         $actual->loadXML($response);

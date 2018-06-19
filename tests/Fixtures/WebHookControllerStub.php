@@ -25,10 +25,13 @@ class WebHookControllerStub extends WebHookController
     {
         $env = app()->make(EnvInterface::class);
         $t = new TransactionStub($env);
-        $response = $t->getTransaction($request->notificationCode, true);
-        $sub = Subscription::where('reference_id', $response->reference)->get()->first();
-        $status = (int) $response->status;
-        $sub->status = makeState($status);
+        $response = $t->getTransaction($request->notificationCode);
+        $reference = $response->getElementsByTagName('reference');
+        $status = $response->getElementsByTagName('status');
+        $referenceValue = $reference[0]->nodeValue;
+        $statusValue = $status[0]->nodeValue;
+        $sub = Subscription::where('reference_id', $referenceValue)->get()->first();
+        $sub->status = makeState($statusValue);
         $sub->save();
     }
 }
