@@ -9,8 +9,8 @@
 namespace AdminWeb\PayerPagSeguro\States;
 
 
-use AdminWeb\Payer\States\CancelledState;
-use AdminWeb\Payer\States\PaidState;
+use AdminWeb\Payer\States\CancelledState as CancelState;
+use AdminWeb\Payer\States\PaidState as PaidedState;
 
 class WaitingPayment extends AbstractState
 {
@@ -26,12 +26,12 @@ class WaitingPayment extends AbstractState
 
     public function pay()
     {
-        return new PaidState();
+        return new PaidedState();
     }
 
     public function cancel()
     {
-        return new CancelledState();
+        return new CancelState();
     }
 
 
