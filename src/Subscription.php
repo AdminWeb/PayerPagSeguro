@@ -14,7 +14,6 @@ use AdminWeb\PayerPagSeguro\Payment\Redirect;
 
 class Subscription extends SubscriptionBase
 {
-    private $reference_id;
 
     public function redirect()
     {
