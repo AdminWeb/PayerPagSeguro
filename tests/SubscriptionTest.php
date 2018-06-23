@@ -29,7 +29,7 @@ class SubscriptionTest extends TestCase
         ]);
         $item = new Item('Tv', 1, 599);
         $itemlist = new ItemList([$item]);
-        $sub = $user->createSubscription('teste', $itemlist)->setReference('REF1234')->start();
+        $sub = $user->createSubscription('teste', $itemlist)->start('REF1234');
         $this->assertTrue($sub->redirect());
     }
 

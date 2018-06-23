@@ -5,6 +5,8 @@ PayerPagSeguro
 
 [![Latest Stable Version](https://poser.pugx.org/adminweb/payer-pagseguro/v/stable?format=flat)](https://packagist.org/packages/adminweb/payer-pagseguro) [![Total Downloads](https://poser.pugx.org/adminweb/payer-pagseguro/downloads?format=flat)](https://packagist.org/packages/adminweb/payer-pagseguro) [![License](https://poser.pugx.org/adminweb/payer-pagseguro/license?format=flat)](https://packagist.org/packages/adminweb/payer-pagseguro)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AdminWeb/PayerPagSeguro/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AdminWeb/PayerPagSeguro/?branch=master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/AdminWeb/PayerPagSeguro/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 ```Not use in Production```
 
 This package has mission provide a only way of payment for pagseguro gateway.
