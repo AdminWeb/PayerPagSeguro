@@ -4,7 +4,7 @@
   "description": "A module payer for pagseguro gateway for laravel",
   "license": "MIT",
   "require": {
-    "adminweb/payer": "~0.0.26",
+    "adminweb/payer": "~0.0.28",
     "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {

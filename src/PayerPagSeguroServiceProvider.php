@@ -10,7 +10,6 @@ namespace AdminWeb\PayerPagSeguro;
 
 
 use AdminWeb\Payer\EnvInterface;
-use AdminWeb\Payer\SubscriptionBuilderInterface;
 use AdminWeb\Payer\SubscriptionInterface;
 use AdminWeb\PayerPagSeguro\Env\Production;
 use AdminWeb\PayerPagSeguro\Env\SandBox;
