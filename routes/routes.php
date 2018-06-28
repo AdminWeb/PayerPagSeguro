@@ -6,4 +6,4 @@
  * Time: 10:07
  */
 
-Route::post('/payer_webhook',['as'=>'payer_webhook', 'uses'=>'WebHookController@handle']);
+Route::post('/payer_webhook',['as'=>'payer_webhook', 'uses'=>'AdminWeb\PayerPagSeguro\Http\WebHookController@handle']);
