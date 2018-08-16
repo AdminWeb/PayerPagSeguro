@@ -12,11 +12,13 @@ namespace AdminWeb\PayerPagSeguro\Tests;
 use AdminWeb\Payer\Itemable\Item;
 use AdminWeb\Payer\PayerServiceProvider;
 use AdminWeb\Payer\Subscription;
+use AdminWeb\PayerPagSeguro\Events\PaidEvent;
 use AdminWeb\PayerPagSeguro\PayerPagSeguroServiceProvider;
 use AdminWeb\PayerPagSeguro\States\PaidState;
 use AdminWeb\PayerPagSeguro\Tests\Fixtures\User;
 use AdminWeb\PayerPagSeguro\Tests\Fixtures\WebHookControllerStub;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Orchestra\Testbench\TestCase;
 
 class WebHookTest extends TestCase
@@ -43,6 +45,7 @@ class WebHookTest extends TestCase
      */
     public function sendPostDataReveiceXml()
     {
+        Event::fake();
         $data = [
             'notificationCode' => '766B9C-AD4B044B04DA-77742F5FA653-E1AB24',
             'notificationType' => 'transaction'
@@ -60,6 +63,7 @@ class WebHookTest extends TestCase
         $sub = Subscription::where('reference_id','REF1234')->get()->first();
         $status = $sub->status;
         $this->assertEquals(PaidState::STATE, $status::STATE);
+        Event::assertDispatched(PaidEvent::class);
     }
 
     protected function setUp()

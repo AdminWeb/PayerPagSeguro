@@ -28,6 +28,7 @@ class WebHookController extends Controller
         $statusValue = $status[0]->nodeValue;
         $sub = Subscription::where('reference_id', $referenceValue)->get()->first();
         $sub->status = makeState($statusValue);
+        event(makeEvent($statusValue));
         $sub->save();
     }
 }

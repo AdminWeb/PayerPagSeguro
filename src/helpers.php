@@ -2,10 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: igor
- * Date: 12/06/18
+ * Date: 16/08/18
  * Time: 16:43
  */
 use AdminWeb\PayerPagSeguro\States\FactoryState;
-function makeState($state){
-    return FactoryState::get($state);
+use AdminWeb\PayerPagSeguro\Events\FactoryEvent;
+
+if(!function_exists('makeState')){
+    function makeState($state){
+        return FactoryState::get($state);
+    }
+}
+
+if(!function_exists('makeEvent')){
+    function makeEvent($event){
+        return FactoryEvent::get($event);
+    }
 }
